@@ -33,8 +33,8 @@ export default tseslint.config(
       'prettier/prettier': [
         'error',
         {
-          'useTabs': false,
-          'tabWidth': 2,
+          'useTabs': true,
+          'tabWidth': 4,
           'endOfLine': "auto"
         }
       ]

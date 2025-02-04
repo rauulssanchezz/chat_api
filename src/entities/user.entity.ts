@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Message } from './message.entity';
 
 @Entity()
 export class User {
@@ -19,4 +20,10 @@ export class User {
 
 	@Column()
 	password: string;
+
+	@OneToMany(() => Message, (message) => message.id)
+	sentMessages: Message[];
+
+	@OneToMany(() => Message, (message) => message.id)
+	receivedMessages: Message[];
 }

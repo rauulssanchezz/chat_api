@@ -37,9 +37,9 @@ export class AuthService {
 
 	refreshToken(refreshToken: string) {
 		try {
-			const decoded: { email: string; id: number } =
+			const decoded: { email: string } =
 				this.jtwService.verify(refreshToken);
-			const payload = { email: decoded.email, id: decoded.id };
+			const payload = { email: decoded.email };
 
 			return {
 				access_token: this.jtwService.sign(payload),

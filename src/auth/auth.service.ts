@@ -35,6 +35,16 @@ export class AuthService {
 		};
 	}
 
+	tokenIsValid(token: string) {
+		try {
+			this.jtwService.verify(token);
+			return true;
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		} catch (e) {
+			return false;
+		}
+	}
+
 	refreshToken(refreshToken: string) {
 		try {
 			const decoded: { email: string } =
@@ -43,6 +53,9 @@ export class AuthService {
 
 			return {
 				access_token: this.jtwService.sign(payload),
+				refresh_token: this.jtwService.sign(payload, {
+					expiresIn: '7d',
+				}),
 			};
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (e) {

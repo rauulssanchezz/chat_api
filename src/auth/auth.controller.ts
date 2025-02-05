@@ -24,4 +24,9 @@ export class AuthController {
 	refreshToken(@Body() body: { refreshToken: string }) {
 		return this.authService.refreshToken(body.refreshToken);
 	}
+
+	@Post('tokenIsValid')
+	tokenIsValid(@Body() body: { token: string }) {
+		return this.authService.tokenIsValid(body.token);
+	}
 }

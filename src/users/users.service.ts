@@ -15,12 +15,21 @@ export class UsersService {
 		name: string,
 		email: string,
 		password: string,
-	): Promise<string> {
+	): Promise<object> {
 		const hashPass = await bcrypt.hash(password, 10);
 		const user = new Users(name, email, hashPass);
-		await this.userRepository.save(user);
 
-		return 'User created succesfully!';
+		const exists = await this.userRepository.findOne({
+			where: { email: email },
+		});
+
+		if (exists) {
+			return { response: 'User already exists!', exists: true };
+		} else {
+			await this.userRepository.save(user);
+		}
+
+		return { response: 'User created succesfully!', exists: false };
 	}
 
 	async getUsers(): Promise<Users[]> {

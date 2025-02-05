@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Message } from 'src/entities/message.entity';
+import { Messages } from 'src/entities/message.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class MessageService {
 	constructor(
-		@InjectRepository(Message)
-		private messageRepository: Repository<Message>,
+		@InjectRepository(Messages)
+		private messageRepository: Repository<Messages>,
 	) {}
 
 	async createMessage(
@@ -16,7 +16,7 @@ export class MessageService {
 		destinyId: number,
 		date: Date,
 	) {
-		const message = new Message(content, originId, destinyId, date);
+		const message = new Messages(content, originId, destinyId, date);
 		await this.messageRepository.save(message);
 
 		return 'Message sent!';

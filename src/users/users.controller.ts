@@ -30,12 +30,6 @@ export class UsersController {
 	}
 
 	@UseGuards(JwtAuthGuard)
-	@Get('getById')
-	getByName(@Query() query: { id: number }) {
-		return this.userService.getUserById(query.id);
-	}
-
-	@UseGuards(JwtAuthGuard)
 	@Get('getByEmail')
 	getByEmail(@Query() query: { email: string }) {
 		return this.userService.getUserByEmail(query.email);
@@ -44,6 +38,6 @@ export class UsersController {
 	@UseGuards(JwtAuthGuard)
 	@Put('update')
 	update(@Body() body: { id: number; name: string; email: string }) {
-		return this.userService.updateUser(body.id, body.name, body.email);
+		return this.userService.updateUser(body.name, body.email);
 	}
 }

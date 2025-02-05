@@ -4,9 +4,9 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { Users } from './entities/users.entity';
 import { AuthModule } from './auth/auth.module';
-import { Message } from './entities/message.entity';
+import { Messages } from './entities/message.entity';
 import { MessageModule } from './message/message.module';
 
 @Module({
@@ -27,7 +27,7 @@ import { MessageModule } from './message/message.module';
 					username: configService.get<string>('DB_USERNAME'),
 					password: configService.get<string>('DB_PASSWORD'),
 					database: configService.get<string>('DB_DATABASE'),
-					entities: [User, Message],
+					entities: [Users, Messages],
 					synchronize: true,
 				};
 			},

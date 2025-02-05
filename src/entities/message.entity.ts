@@ -5,10 +5,10 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from './user.entity';
+import { Users } from './users.entity';
 
 @Entity()
-export class Message {
+export class Messages {
 	constructor(
 		content: string,
 		senderId: number,
@@ -24,13 +24,13 @@ export class Message {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@ManyToOne(() => User, (user) => user.sentMessages)
-	@JoinColumn({ name: 'senderId' })
-	sender: User;
+	@ManyToOne(() => Users, (user) => user.sentMessages)
+	@JoinColumn({ name: 'senderEmail' })
+	sender: Users;
 
-	@ManyToOne(() => User, (user) => user.receivedMessages)
-	@JoinColumn({ name: 'receiverId' })
-	receiver: User;
+	@ManyToOne(() => Users, (user) => user.receivedMessages)
+	@JoinColumn({ name: 'receiverEmail' })
+	receiver: Users;
 
 	@Column()
 	senderId: number;

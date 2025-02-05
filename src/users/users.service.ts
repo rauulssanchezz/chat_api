@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/entities/users.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
 	constructor(
 		@InjectRepository(Users)
 		private userRepository: Repository<Users>,
+		private jwtService: JwtService,
 	) {}
 
 	async createUser(
@@ -32,8 +34,10 @@ export class UsersService {
 		return { response: 'User created succesfully!', exists: false };
 	}
 
-	async getUsers(): Promise<Users[]> {
-		return await this.userRepository.find();
+	async getUsers(token: string): Promise<Users[]> {
+		const decoded: { email: string } = this.jwtService.verify(token);
+		const email = decoded.email;
+		return await this.userRepository.find({ where: { email: Not(email) } });
 	}
 
 	async getUserByEmail(email: string): Promise<Users | string> {

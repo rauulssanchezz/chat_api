@@ -25,8 +25,8 @@ export class UsersController {
 
 	@UseGuards(JwtAuthGuard)
 	@Get('get')
-	get() {
-		return this.userService.getUsers();
+	get(@Query() query: { token: string }) {
+		return this.userService.getUsers(query.token);
 	}
 
 	@UseGuards(JwtAuthGuard)
